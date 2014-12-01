@@ -23,6 +23,11 @@ MAINTAINER  Bernhard Weisshuhn "bkw@codingforce.com"
 # If you ever want to freshly rebuild the runner please use:
 # docker build -no-cache -t codingforce/gitlab-ci-runner-nodejs github.com/bkw/gitlab-ci-runner-nodejs
 
+# Fix upstart under a virtual host https://github.com/dotcloud/docker/issues/1024
+RUN dpkg-divert --local --rename --add /sbin/initctl \
+ && ln -s /bin/true /sbin/initctl
+ 
+ 
 # Update your packages and install the ones that are needed to compile Ruby
 RUN apt-get update -y
 RUN apt-get install -y \
